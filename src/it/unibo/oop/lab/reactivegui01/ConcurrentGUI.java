@@ -3,8 +3,6 @@ package it.unibo.oop.lab.reactivegui01;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JButton;
@@ -15,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 /**
  * This is a first example on how to realize a reactive GUI.
+ * This shows an alternative solutions using lambdas
  */
 public final class ConcurrentGUI extends JFrame {
 
@@ -47,19 +46,7 @@ public final class ConcurrentGUI extends JFrame {
         /*
          * Register a listener that stops it
          */
-        stop.addActionListener(new ActionListener() {
-            /**
-             * event handler associated to action event on button stop.
-             * 
-             * @param e
-             *            the action event that will be handled by this listener
-             */
-            @Override
-            public void actionPerformed(final ActionEvent e) {
-                // Agent should be final
-                agent.stopCounting();
-            }
-        });
+        stop.addActionListener((e) -> agent.stopCounting());
     }
 
     /*
@@ -78,24 +65,15 @@ public final class ConcurrentGUI extends JFrame {
          * 
          */
         private volatile boolean stop;
-        private volatile int counter;
+        private int counter;
 
         @Override
         public void run() {
             while (!this.stop) {
                 try {
-                    /*
-                     * All the operations on the GUI must be performed by the
-                     * Event-Dispatch Thread (EDT)!
-                     */
-                    SwingUtilities.invokeAndWait(() -> ConcurrentGUI.this.display.setText(Integer.toString(this.counter)));
-                    /*
-                     * SpotBugs shows a warning because the increment of a volatile variable is not atomic,
-                     * so the concurrent access is potentially not safe.
-                     * In the specific case of this exercise, we do synchronization with invokeAndWait, so
-                     * it can be ignored.
-                     * Don't ignore warnings in the final project!
-                     */
+                    // The EDT doesn't access `counter` anymore, it doesn't need to be volatile 
+                    final var nextText = Integer.toString(this.counter);
+                    SwingUtilities.invokeAndWait(() -> ConcurrentGUI.this.display.setText(nextText));
                     this.counter++;
                     Thread.sleep(100);
                 } catch (InvocationTargetException | InterruptedException ex) {

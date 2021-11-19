@@ -68,7 +68,16 @@ public final class ConcurrentGUI extends JFrame {
                      * immediately and does not overload EDT
                      */
                     final var todisplay = Integer.toString(counter);
-                    SwingUtilities.invokeLater(() -> display.setText(todisplay));
+                    SwingUtilities.invokeLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            display.setText(todisplay);
+                        }
+                    });
+                    /**
+                     * With lambdas instead:
+                     * SwingUtilities.invokeLater(() -> display.setText(todisplay));
+                     */
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
