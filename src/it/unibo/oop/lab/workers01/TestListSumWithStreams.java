@@ -47,7 +47,7 @@ public class TestListSumWithStreams {
         for (final int threads: new int[] { 1, 2, 3, 8, 16, 32 }) {
             final SumList sumList = new MultiThreadedListSumWithStreams(threads);
             time = System.currentTimeMillis();
-            assertEquals(sumList.sum(list), sum);
+            assertEquals(sum, sumList.sum(list));
             System.out.println("Tried with " + threads + " thread: "
                     + (System.currentTimeMillis() - time) + MSEC);
         }
