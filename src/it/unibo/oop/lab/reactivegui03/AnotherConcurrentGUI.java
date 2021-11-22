@@ -53,13 +53,13 @@ public final class AnotherConcurrentGUI extends JFrame {
         down.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                counterAgent.downCounting();                
+                counterAgent.downCounting();
             }
         });
         stop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                AnotherConcurrentGUI.this.stopCounting();                
+                AnotherConcurrentGUI.this.stopCounting();
             }
         });
         new Thread(counterAgent).start();
@@ -71,7 +71,7 @@ public final class AnotherConcurrentGUI extends JFrame {
                 } catch (InterruptedException ex) {
                     ex.printStackTrace();
                 }
-                AnotherConcurrentGUI.this.stopCounting();                
+                AnotherConcurrentGUI.this.stopCounting();
             }
         }).start();
     }

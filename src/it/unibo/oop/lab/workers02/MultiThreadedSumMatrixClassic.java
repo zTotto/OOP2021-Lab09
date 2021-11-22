@@ -26,7 +26,7 @@ public class MultiThreadedSumMatrixClassic implements SumMatrix {
         this.nthread = nthread;
     }
 
-    private class Worker extends Thread {
+    private final class Worker extends Thread {
 
         private final double[][] matrix;
         private final int startpos;

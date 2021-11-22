@@ -30,7 +30,7 @@ public class MultiThreadedSumMatrixWithFutures implements SumMatrix {
         this.nthread = nthread;
     }
 
-    private class Worker implements Callable<Double> {
+    private final class Worker implements Callable<Double> {
 
         private final double[][] matrix;
         private final int startpos;
