@@ -1,7 +1,6 @@
 package it.unibo.oop.lab.workers02;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -44,9 +43,9 @@ public class MultiThreadedSumMatrixClassic implements SumMatrix {
          * @param nelem
          *            the no. of element for him to sum
          */
-        Worker(final double[][] matrix, final int startpos, final int nelem) {
+        private Worker(final double[][] matrix, final int startpos, final int nelem) {
             super();
-            this.matrix = Arrays.copyOf(matrix, matrix.length);
+            this.matrix = matrix;
             this.startpos = startpos;
             this.nelem = nelem;
         }
