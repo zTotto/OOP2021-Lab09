@@ -100,7 +100,8 @@ public final class ConcurrentGUI extends JFrame {
                      * so the concurrent access is potentially not safe. In the specific case of this exercise,
                      * we do synchronization with invokeAndWait, so it can be ignored.
                      *
-                     * EXERCISE: Can you think of a solution that doesn't require counter to be volatile?
+                     * EXERCISE: Can you think of a solution that doesn't require counter to be volatile? (without
+                     * using synchronized or locks)
                      */
                     this.counter++;
                     Thread.sleep(100);
