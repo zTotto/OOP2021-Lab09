@@ -97,10 +97,11 @@ public final class AnotherConcurrentGUI extends JFrame {
         public void run() {
             while (!stop) {
                 try {
+                    final var nextText = Integer.toString(counter);
                     SwingUtilities.invokeAndWait(new Runnable() {
                         @Override
                         public void run() {
-                            display.setText(Integer.toString(counter));
+                            display.setText(nextText);
                         }
                     });
                     counter += up ? 1 : -1;

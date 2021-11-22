@@ -74,7 +74,8 @@ public final class AnotherConcurrentGUIWithLambdas extends JFrame {
         public void run() {
             while (!stop) {
                 try {
-                    SwingUtilities.invokeAndWait(() -> display.setText(Integer.toString(counter)));
+                    final var nextText = Integer.toString(counter);
+                    SwingUtilities.invokeAndWait(() -> display.setText(nextText));
                     counter += up ? 1 : -1;
                     Thread.sleep(100);
                 } catch (InterruptedException | InvocationTargetException ex) {
