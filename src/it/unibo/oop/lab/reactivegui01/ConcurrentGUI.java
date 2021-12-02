@@ -6,6 +6,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.lang.reflect.InvocationTargetException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -78,7 +79,7 @@ public final class ConcurrentGUI extends JFrame {
          * 
          */
         private volatile boolean stop;
-        private volatile int counter;
+        private final AtomicInteger counter = new AtomicInteger(0);
 
         @Override
         public void run() {
@@ -92,7 +93,7 @@ public final class ConcurrentGUI extends JFrame {
                         @Override
                         public void run() {
                             // This will happen in the EDT: since i'm reading counter it needs to be volatile.
-                            ConcurrentGUI.this.display.setText(Integer.toString(Agent.this.counter));
+                            ConcurrentGUI.this.display.setText(Agent.this.counter.toString());
                         }
                     });
                     /*
@@ -102,8 +103,10 @@ public final class ConcurrentGUI extends JFrame {
                      *
                      * EXERCISE: Can you think of a solution that doesn't require counter to be volatile? (without
                      * using synchronized or locks)
+                     * 
+                     * I changed "volatile int counter" to "final AtomicInteger counter"
                      */
-                    this.counter++;
+                    counter.getAndIncrement();
                     Thread.sleep(100);
                 } catch (InvocationTargetException | InterruptedException ex) {
                     /*
